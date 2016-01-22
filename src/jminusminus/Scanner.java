@@ -156,6 +156,9 @@ class Scanner {
         case '/':
             nextCh();
             return new TokenInfo(DIV, line);
+        case '%':
+            nextCh();
+            return new TokenInfo(MOD, line);
         case '+':
             nextCh();
             if (ch == '=') {

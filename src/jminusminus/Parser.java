@@ -1134,10 +1134,9 @@ public class Parser {
             } else if (have(DIV)) {
                 lhs = new JDivideOp(line, lhs, unaryExpression());
 
-            }
-            /*else if (have(MOD)) {
+            } else if (have(MOD)) {
                 lhs = new JModuloOp(line, lhs, unaryExpression());
-            }*/ else {
+            } else {
                 more = false;
             }
         }
