@@ -279,7 +279,7 @@ public class Parser {
      */
 
     private boolean seeBasicType() {
-        if (see(BOOLEAN) || see(CHAR) || see(INT) || see(DOUBLE)) {
+        if (see(BOOLEAN) || see(CHAR) || see(INT)/* || see(DOUBLE)*/) {
             return true;
         } else {
             return false;
@@ -302,7 +302,7 @@ public class Parser {
             return true;
         } else {
             scanner.recordPosition();
-            if (have(BOOLEAN) || have(CHAR) || have(INT) || have(DOUBLE)) {
+            if (have(BOOLEAN) || have(CHAR) || have(INT)/* || have(DOUBLE)*/) {
                 if (have(LBRACK) && see(RBRACK)) {
                     scanner.returnToPosition();
                     return true;
@@ -902,8 +902,8 @@ public class Parser {
             return Type.CHAR;
         } else if (have(INT)) {
             return Type.INT;
-        } else if (have(DOUBLE)) {
-            return Type.DOUBLE;
+        /*} else if (have(DOUBLE)) {
+            return Type.DOUBLE;*/
         } else {
             reportParserError("Type sought where %s found", scanner.token()
                     .image());
@@ -1131,10 +1131,13 @@ public class Parser {
         while (more) {
             if (have(STAR)) {
                 lhs = new JMultiplyOp(line, lhs, unaryExpression());
-            } 
-            else if (have(MOD)) {
+            } else if (have(DIV)) {
+                lhs = new JDivideOp(line, lhs, unaryExpression());
+
+            }
+            /*else if (have(MOD)) {
                 lhs = new JModuloOp(line, lhs, unaryExpression());
-            } else {
+            }*/ else {
                 more = false;
             }
         }
@@ -1159,9 +1162,9 @@ public class Parser {
             return new JPreIncrementOp(line, unaryExpression());
         } else if (have(MINUS)) {
             return new JNegateOp(line, unaryExpression());
-        } else if (have(BC)) {
+        } /*else if (have(BC)) {
             return new JBitwiseComplementOp(line, unaryExpression());
-        } else {
+        }*/ else {
             return simpleUnaryExpression();
         }
     }
@@ -1408,8 +1411,8 @@ public class Parser {
         int line = scanner.token().line();
         if (have(INT_LITERAL)) {
             return new JLiteralInt(line, scanner.previousToken().image());
-        } else if (have(DOUBLE_LITERAL)) {
-            return new JLiteralDouble(line, scanner.previousToken().image());
+        /*} else if (have(DOUBLE_LITERAL)) {
+            return new JLiteralDouble(line, scanner.previousToken().image());*/
         } else if (have(CHAR_LITERAL)) {
             return new JLiteralChar(line, scanner.previousToken().image());
         } else if (have(STRING_LITERAL)) {
