@@ -342,3 +342,20 @@ class JPreIncrementOp extends JUnaryExpression {
     }
 
 }
+
+class JBitwiseComplementOp extends JUnaryExpression{
+    public JBitwiseComplementOp(int line, JExpression arg) {
+        super(line, "~", arg);
+    }
+    public JExpression analyze(Context context) {
+        arg = arg.analyze(context);
+        arg.type().mustMatchExpected(line(), Type.INT);
+        type = Type.INT;
+        return this;
+    }
+    public void codegen(CLEmitter output) {
+        arg.codegen(output);
+        output.addNoArgInstruction(ICONST_M1);
+        output.addNoArgInstruction(IXOR);
+    }
+}
