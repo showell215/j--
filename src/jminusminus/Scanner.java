@@ -100,7 +100,18 @@ class Scanner {
             }
             if (ch == '/') {
                 nextCh();
-                if (ch == '/') {
+                if (ch == '*') {
+                    //continue until we see "*/"
+                    while (true) {
+                        nextCh();
+                        if (ch == '*') {
+                            nextCh();
+                            if (ch == '/') {
+                                break;
+                            }
+                        }
+                    }
+                } else if (ch == '/') {
                     // CharReader maps all new lines to '\n'
                     while (ch != '\n' && ch != EOFCH) {
                         nextCh();
@@ -252,12 +263,32 @@ class Scanner {
             return new TokenInfo(STRING_LITERAL, buffer.toString(), line);
         case '.':
             nextCh();
-            return new TokenInfo(DOT, line);
+            if (!isDigit(ch)) {
+                return new TokenInfo(DOT, line);
+            }
+            //else, it is a digit -> Double Literal
+            buffer = new StringBuffer("."); //add "." back in to buffer
+            while (isDigit(ch)) {
+                buffer.append(ch);
+                nextCh();
+            }
+            return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
         case EOFCH:
             return new TokenInfo(EOF, line);
         case '0':
             // Handle only simple decimal integers for now.
             nextCh();
+            // is next char a '.'?
+            if (ch == '.') {
+                buffer = new StringBuffer("0."); //add "0." back in to buffer
+                nextCh();
+                while (isDigit(ch)) {
+                    buffer.append(ch);
+                    nextCh();
+                }
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+
+            }
             return new TokenInfo(INT_LITERAL, "0", line);
         case '1':
         case '2':
@@ -268,12 +299,28 @@ class Scanner {
         case '7':
         case '8':
         case '9':
-            buffer = new StringBuffer();
-            while (isDigit(ch)) {
+            //is next char a '.'?
+            //store first char
+            char first = ch;
+            nextCh();
+            buffer = new StringBuffer(first); //add first char in token to buffer
+            if (ch == '.') { //double
                 buffer.append(ch);
                 nextCh();
+                while (isDigit(ch)) {
+                   buffer.append(ch);
+                   nextCh();
+                }
+                return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
+            } else { //int
+                while (isDigit(ch)) {
+                   buffer.append(ch);
+                   nextCh();
+                }
+                return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             }
-            return new TokenInfo(INT_LITERAL, buffer.toString(), line);
+            
+            
         default:
             if (isIdentifierStart(ch)) {
                 buffer = new StringBuffer();

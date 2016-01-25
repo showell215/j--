@@ -12,7 +12,7 @@ public class ModuloTest extends TestCase {
         modulo = new Modulo();
     }
 
-    public void testDivide() {
+    public void testModulo() {
         this.assertEquals(modulo.mod(0, 42), 42);
         this.assertEquals(modulo.mod(42, 6), 0);
         this.assertEquals(modulo.mod(42, 5), 2);

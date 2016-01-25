@@ -3,10 +3,10 @@ package fail;
 
 import java.lang.System;
 
-public class Modulo {
+public class DoubleLiteral {
 
     public static void main(String[] args) {
-        System.out.println( "abc" % 42);
+        double a = 1.23.45;
     }
 
 }
