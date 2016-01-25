@@ -147,6 +147,9 @@ class Scanner {
             } else {
                 return new TokenInfo(ASSIGN, line);
             }
+        case '~':
+            nextCh();
+            return new TokenInfo(BC, line);
         case '!':
             nextCh();
             return new TokenInfo(LNOT, line);
