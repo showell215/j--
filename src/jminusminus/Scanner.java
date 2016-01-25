@@ -102,11 +102,12 @@ class Scanner {
                 nextCh();
                 if (ch == '*') {
                     //continue until we see "*/"
-                    while (true) {
+                    while (ch != EOFCH) {
                         nextCh();
                         if (ch == '*') {
                             nextCh();
                             if (ch == '/') {
+                                nextCh();
                                 break;
                             }
                         }
