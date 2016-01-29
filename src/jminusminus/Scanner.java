@@ -60,6 +60,7 @@ class Scanner {
         reserved.put(BOOLEAN.image(), BOOLEAN);
         reserved.put(CHAR.image(), CHAR);
         reserved.put(CLASS.image(), CLASS);
+        reserved.put(DOUBLE.image(), DOUBLE);
         reserved.put(ELSE.image(), ELSE);
         reserved.put(EXTENDS.image(), EXTENDS);
         reserved.put(FALSE.image(), FALSE);
@@ -300,11 +301,15 @@ class Scanner {
         case '7':
         case '8':
         case '9':
-            //is next char a '.'?
-            //store first char
-            char first = ch;
+            //store first char in buffer
+            buffer = new StringBuffer();
+            buffer.append(ch);
             nextCh();
-            buffer = new StringBuffer(first); //add first char in token to buffer
+            //whether double or int, fill the buffer with integers until we see something different
+            while (isDigit(ch)) {
+                   buffer.append(ch);
+                   nextCh();
+                }
             if (ch == '.') { //double
                 buffer.append(ch);
                 nextCh();
@@ -314,10 +319,6 @@ class Scanner {
                 }
                 return new TokenInfo(DOUBLE_LITERAL, buffer.toString(), line);
             } else { //int
-                while (isDigit(ch)) {
-                   buffer.append(ch);
-                   nextCh();
-                }
                 return new TokenInfo(INT_LITERAL, buffer.toString(), line);
             }
             

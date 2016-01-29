@@ -5,17 +5,17 @@ import pass.Modulo;
 
 public class ModuloTest extends TestCase {
 
-    private Modulo modulo;
+    private Modulo mod;
 
     protected void setUp() throws Exception {
         super.setUp();
-        modulo = new Modulo();
+        mod = new Modulo();
     }
 
     public void testModulo() {
-        this.assertEquals(modulo.mod(0, 42), 42);
-        this.assertEquals(modulo.mod(42, 6), 0);
-        this.assertEquals(modulo.mod(42, 5), 2);
+        this.assertEquals(mod.modulo(41, 42), 41);
+        this.assertEquals(mod.modulo(42, 6), 0);
+        this.assertEquals(mod.modulo(42, 5), 2);
     }
 
     protected void tearDown() throws Exception {

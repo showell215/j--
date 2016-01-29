@@ -5,15 +5,19 @@ import java.lang.System;
 
 
 public class DoubleLiteral {
-    public double addDoubles(double x, double y) {
-        return  x + y;
+    public void doubleLiteral() {
+       double a = 0.2534534534;
+       double b = .50000001;
+       double c = 1.259;
+       double e = 2.;
+       double f = 2345.2343;
+       double g = 1234.;
     }
    
    public static void main(String[] args) {
         DoubleLiteral dl = new DoubleLiteral();
-        double x = Double.parseDouble(args[0]);
-        double y = Double.parseDouble(args[1]);
-        System.out.println("DOUBLE(" + x + " + " + y + ") = " + dl.addDoubles(x, y));
+        dl.doubleLiteral();
+        System.out.println("DOUBLE: successfully declared.");
     }
 
 }
