@@ -12,6 +12,8 @@ public class DoubleLiteral {
        double e = 2.;
        double f = 2345.2343;
        double g = 1234.;
+       double h = 1.000;
+       double i = 0.000;
     }
    
    public static void main(String[] args) {

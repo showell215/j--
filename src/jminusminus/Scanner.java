@@ -101,8 +101,8 @@ class Scanner {
             }
             if (ch == '/') {
                 nextCh();
-                if (ch == '*') {
-                    //continue until we see "*/"
+                if (ch == '*') { // multi-line comment
+                                 // continue until we see "*/"
                     while (ch != EOFCH) {
                         nextCh();
                         if (ch == '*') {
@@ -278,7 +278,7 @@ class Scanner {
         case EOFCH:
             return new TokenInfo(EOF, line);
         case '0':
-            // Handle only simple decimal integers for now.
+            // Either int or double
             nextCh();
             // is next char a '.'?
             if (ch == '.') {
@@ -309,7 +309,7 @@ class Scanner {
             while (isDigit(ch)) {
                    buffer.append(ch);
                    nextCh();
-                }
+            }
             if (ch == '.') { //double
                 buffer.append(ch);
                 nextCh();
